@@ -5,8 +5,8 @@ FROM debian:buster-slim
 ENV GOSU_VERSION 1.14
 
 ENV MYSQL_MAJOR 5.7
-ENV MYSQL_MINOR ${MYSQL_MAJOR}.39
-ENV MYSQL_VERSION 5.7.39-1debian10
+ENV MYSQL_MINOR ${MYSQL_MAJOR}.40
+ENV MYSQL_VERSION 5.7.40-1debian10
 
 RUN set -eux; \
         # add our user and group first to make sure their IDs get assigned consistently, regardless of whatever dependencies get added
