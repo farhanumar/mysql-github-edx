@@ -8,6 +8,8 @@ on:
 jobs:
   docker:
     runs-on: ubuntu-latest
+    env:      
+      DOCKER_TARGET_PLATFORM: linux/arm/v7
     steps:
       -
         name: Set up Docker Buildx
