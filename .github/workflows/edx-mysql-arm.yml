@@ -35,7 +35,8 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           push: true
-          context: docker/build/mysql/
+          context: .
+          file: docker/build/mysql/Dockerfile
           tags: fan0o/edx-mysql-${{ matrix.arch }}:5.7
           arch: ${{ matrix.arch }}
           distro: ${{ matrix.distro }}
@@ -44,7 +45,8 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           push: true
-          context: docker/build/mysql/
+          context: .
+          file: docker/build/mysql/Dockerfile
           tags: fan0o/edx-mysql-${{ matrix.arch }}:5.7
           arch: ${{ matrix.arch }}
           distro: ${{ matrix.distro }}
