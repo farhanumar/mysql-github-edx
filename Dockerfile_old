@@ -5,8 +5,8 @@ FROM debian:buster-slim
 ENV GOSU_VERSION 1.14
 
 ENV MYSQL_MAJOR 5.7
-ENV MYSQL_MINOR ${MYSQL_MAJOR}.39
-ENV MYSQL_VERSION 5.7.39-1debian10
+ENV MYSQL_MINOR ${MYSQL_MAJOR}.40
+ENV MYSQL_VERSION 5.7.40-1debian10
 
 RUN set -eux; \
         # add our user and group first to make sure their IDs get assigned consistently, regardless of whatever dependencies get added
@@ -71,17 +71,18 @@ RUN set -eux; \
         mkdir /usr/src/mysql; \
         cd /usr/src/mysql; \
         apt source mysql-community-server; \
-        cd mysql-community-*; \
+        cd mysql-community-${MYSQL_MINOR}; \
         sed -i -e "s/\-DWITH_BOOST\=\/usr\/global\/share/\-DWITH_BOOST\=\/tmp\/boost \-DDOWNLOAD_BOOST\=1/g" debian/rules; \
         sed -i -e "s/\-DWITH_SSL\=.* /-DWITH_SSL\=system /g" debian/rules; \
         debuild -b -uc -us; \
+        MYSQL_DEB_VERSION=${MYSQL_VERSION}_${dpkgArch}; \
         cd ~; \
         dpkg --install \
-                /usr/src/mysql/mysql-common_*.deb \
-                /usr/src/mysql/mysql-community-server_*.deb \
-                /usr/src/mysql/mysql-community-client_*.deb \
-                /usr/src/mysql/mysql-server_*.deb \
-                /usr/src/mysql/mysql-client_*.deb; \
+                /usr/src/mysql/mysql-common_${MYSQL_DEB_VERSION}.deb \
+                /usr/src/mysql/mysql-community-server_${MYSQL_DEB_VERSION}.deb \
+                /usr/src/mysql/mysql-community-client_${MYSQL_DEB_VERSION}.deb \
+                /usr/src/mysql/mysql-server_${MYSQL_DEB_VERSION}.deb \
+                /usr/src/mysql/mysql-client_${MYSQL_DEB_VERSION}.deb; \
         rm -rf /usr/src/mysql /tmp/boost /mysql-community-build-deps*deb; \
         apt-get remove --purge -y mysql-community-build-deps ${DEVELOPMENT_PACKAGES}; \
         apt-get -y autoremove; \
