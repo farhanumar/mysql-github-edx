@@ -14,7 +14,7 @@ on:
 jobs:
   docker:
     runs-on: ubuntu-latest
-    name: Build on ${{ matrix.distro }} ${{ matrix.arch }}
+    name: Build arm/amd mysql images
     steps:
       -
         name: Checkout
@@ -40,4 +40,4 @@ jobs:
           push: true
           context: docker/build/mysql/
           tags: fan0o/edx-mysql:5.7
-          archs: amd64, arm64
+          platforms: linux/amd64,linux/arm64
