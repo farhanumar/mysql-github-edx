@@ -11,12 +11,12 @@ jobs:
     name: Build on ${{ matrix.distro }} ${{ matrix.arch }}
     strategy:
       matrix:
-        arch: [aarch64, armv6]
+        arch: [amd64, armv6]
         include:
-          - arch: aarch64
+          - arch: amd64
             distro: ubuntu-latest
           - arch: armv6
-            distro: raspios_lite:latest
+            distro: ubuntu20.04
     steps:
       -
         name: Set up Docker Buildx
