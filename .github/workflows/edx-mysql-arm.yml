@@ -11,13 +11,12 @@ jobs:
     name: Build on ${{ matrix.distro }} ${{ matrix.arch }}
     strategy:
       matrix:
+        arch: [aarch64, armv6]
         include:
           - arch: aarch64
             distro: ubuntu-latest
-          - arch: armv7
-            distro: ubuntu-latest
-    env:      
-      DOCKER_TARGET_PLATFORM: linux/arm/v7
+          - arch: armv6
+            distro: raspios_lite:latest
     steps:
       -
         name: Set up Docker Buildx
@@ -30,21 +29,22 @@ jobs:
         uses: docker/login-action@v2
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
+          password: ${{ secrets.DOCKERHUB_TOKEN
       -
-        name: Build and push amd64 image 
+        name: Build and push ${{ matrix.arch }}
         uses: docker/build-push-action@v3
         with:
           push: true
-          tags: user/app:latest
+          context: ./docker/build/mysql/
+          tags: fan0o/edx-mysql-${{ matrix.arch }}:5.7
           arch: ${{ matrix.arch }}
           distro: ${{ matrix.distro }}
       -
-        name: Build and push arm image
+        name: Build and push ${{ matrix.arch }}
         uses: docker/build-push-action@v3
         with:
           push: true
-#         platforms: linux/arm/v7
-          tags: edxops/mysql-arm:5.7
+          context: ./docker/build/mysql/
+          tags: fan0o/edx-mysql-${{ matrix.arch }}:5.7
           arch: ${{ matrix.arch }}
           distro: ${{ matrix.distro }}
