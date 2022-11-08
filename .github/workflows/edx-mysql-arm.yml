@@ -41,8 +41,8 @@ jobs:
           arch: ${{ matrix.arch }}
           distro: ${{ matrix.distro }}
       -
-	name: check file path
-	run: pwd
+        name: check file path
+        run: pwd
       -
         name: Build and push ${{ matrix.arch }}
         uses: docker/build-push-action@v3
