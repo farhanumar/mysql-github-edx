@@ -35,17 +35,20 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           push: true
-          context: .
+#          context: .
           file: docker/build/mysql/Dockerfile
           tags: fan0o/edx-mysql-${{ matrix.arch }}:5.7
           arch: ${{ matrix.arch }}
           distro: ${{ matrix.distro }}
       -
+	name: check file path
+	run: pwd
+      -
         name: Build and push ${{ matrix.arch }}
         uses: docker/build-push-action@v3
         with:
           push: true
-          context: .
+#          context: .
           file: docker/build/mysql/Dockerfile
           tags: fan0o/edx-mysql-${{ matrix.arch }}:5.7
           arch: ${{ matrix.arch }}
