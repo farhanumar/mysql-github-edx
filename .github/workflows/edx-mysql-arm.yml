@@ -10,7 +10,6 @@ on:
       - "docker/build/mysql/Dockerfile"
       - .github/workflows/edx-mysql-arm.yml
 
-
 jobs:
   docker:
     runs-on: ubuntu-latest
@@ -34,10 +33,18 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       -
-        name: Build and push ${{ matrix.arch }}
+        name: Build and push amd64
         uses: docker/build-push-action@v3
         with:
           push: true
           context: docker/build/mysql/
           tags: fan0o/edx-mysql:5.7
-          platforms: linux/amd64,linux/arm64
+          platforms: linux/amd64
+      -
+        name: Build and push on arm
+        uses: docker/build-push-action@v3
+        with:
+          push: true
+          context: docker/build/mysql/
+          tags: fan0o/edx-mysql:5.7
+          platforms: linux/arm64
